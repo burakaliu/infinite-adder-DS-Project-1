@@ -60,13 +60,18 @@ public class Main {
         }
 
         //adding
+
+        //new linked list for storing the sum
         Node head3 = new Node();
         Node curr3 = head3;
+        //if a nummber needs to be carried over it will be stored in this value
         int carry = 0;
+        //these are used to make sure that the program doesn't try to read a null value
         int c1;
         int c2;
 
         while (curr1 != null || curr2 != null){
+            //makes sure that curr1 or curr2 is never null
             if (curr1 != null){
                 c1 = curr1.value;
             }else{
@@ -77,52 +82,41 @@ public class Main {
             }else{
                 c2 = 0;
             }
-            if (c1 + c2 + carry < 10){
-                System.out.println("no carrying curr3: " + curr3.value + " curr1.value: " + c1 + " curr2.value: " + c2);
+
+            if (c1 + c2 + carry < 10){ //no carrying needed
                 curr3.value = c1 + c2 + carry;
                 carry = 0;
-                System.out.println("curr3.value: " + curr3.value);
-                System.out.println();
-            }else {
-                System.out.println("carrying curr3: " + curr3.value + " curr1.value: " + c1 + " curr2.value: " + c2 + " carry: " + carry);
+            }else { // the digits add up to > 10 so we have to carry to the next number
+                //get first digit of the sum of the 2 numbers being added and store it in digit1 which will later go in carry
                 String digit1 = Integer.toString(c1 + c2 + carry).substring(0, 1);
+                //get the second digit which is the digit that will be
                 String digit2 = Integer.toString(c1 + c2 + carry).substring(1, 2);
-                System.out.println("carrying digit1: " + digit1 + " digit2: " + digit2);
                 curr3.value = Integer.valueOf(digit2);
+                //set the number to be carried to digit 1
                 carry = Integer.valueOf(digit1);
-                System.out.println("carrying curr3: " + curr3.value + " curr1.value: " + c1 + " curr2.value: " + c2 + " carry: " + carry);
-                System.out.println();
             }
-
-            System.out.println("at end of while loop print curr3.value: " + curr3.value);
             System.out.println();
+            //move the currs to the next number to be added
             if (curr1 != null){
                 curr1 = curr1.prev;
             }
             if (curr2 != null){
                 curr2 = curr2.prev;
             }
+            //make a new node for the linked list for the sum
             curr3.prev = new Node();
             curr3.prev.next = curr3;
             curr3 = curr3.prev;
 
         }
-        System.out.println("adding extra carry:" + carry);
-        //curr3.value = carry;
-        curr3 = curr3.next;
 
+        //skip the first digit because its unused
+        curr3 = curr3.next;
+        //print out the sum in the correct order
         while (curr3 != null){
             System.out.print(curr3.value);
             curr3 = curr3.next;
         }
-        /*
-        //reset curr
-        curr1 = head1;
-        //print out the values in the linked list
-        while (curr1 != null) {
-            System.out.println(curr1.value);
-            curr1 = curr1.next;
-        }
-        */
+
     }
 }
